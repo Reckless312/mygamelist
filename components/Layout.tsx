@@ -1,4 +1,15 @@
 import React, { ReactNode } from 'react';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import { ChevronDown, User } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
 
 interface LayoutProps {
     children: ReactNode;
@@ -18,6 +29,43 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             animationDuration: `${Math.random() * 10 + 10}s`,
                             animationDelay: `${Math.random() * 5}s`}}/>))}
             </div>
+
+            <header className="relative z-20 py-6 px-6 md:px-10 flex items-center justify-between">
+                <h1 className="text-2xl md:text-3xl font-bold text-white hover:text-gray-100 transition-colors">
+                    MyGameList
+                </h1>
+
+                <div className="flex items-center space-x-4">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                className="flex items-center space-x-2 bg-indigo-900/50 hover:bg-indigo-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-indigo-700">
+                                <User className="h-5 w-5 text-indigo-300" />
+                                <span className="text-indigo-100 font-medium">Randomname23</span>
+                                <ChevronDown className="h-4 w-4 text-indigo-300" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56 bg-gray-800/90 backdrop-blur-lg border border-gray-700">
+                            <DropdownMenuLabel className="text-indigo-100">My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator className="bg-gray-700" />
+                            <DropdownMenuItem className="focus:bg-indigo-900/50 focus:text-indigo-100 cursor-pointer">
+                                Profile
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="focus:bg-indigo-900/50 focus:text-indigo-100 cursor-pointer">
+                                Settings
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="focus:bg-indigo-900/50 focus:text-indigo-100 cursor-pointer">
+                                Subscriptions
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator className="bg-gray-700" />
+                            <DropdownMenuItem className="focus:bg-rose-900/50 focus:text-rose-100 cursor-pointer">
+                                Logout
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            </header>
 
             <div className="relative z-10 p-6 md:p-10 text-white">
                 {children}
