@@ -1,15 +1,6 @@
-import React, { ReactNode } from 'react';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
-import { ChevronDown, User } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-
+import React, { ReactNode } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface LayoutProps {
     children: ReactNode;
@@ -17,79 +8,44 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
-        <div className="relative min-h-screen bg-gradient-to-b from-gray-900 to-indigo-950 overflow-hidden">
-            <div className="absolute inset-0 z-0">
-                {[...Array(20)].map((_, i) => (
-                    <div key={i} className="absolute rounded-full bg-indigo-500 opacity-20 animate-float"
-                        style={{
-                            width: `${Math.random() * 10 + 5}px`,
-                            height: `${Math.random() * 10 + 5}px`,
-                            top: `${Math.random() * 100}%`,
-                            left: `${Math.random() * 100}%`,
-                            animationDuration: `${Math.random() * 10 + 10}s`,
-                            animationDelay: `${Math.random() * 5}s`}}/>))}
+        <div className="flex flex-col min-h-screen bg-black text-white font-mono">
+            {/* Top Bar */}
+            <div className="bg-[#0F0F14] flex items-center justify-between px-16 py-5">
+                <header className="text-3xl">MyGameList</header>
+
+                {/* TO DO: Right side with profile */}
+                <div></div>
             </div>
 
-            <header className="relative z-20 py-6 px-6 md:px-10 flex items-center justify-between">
-                <h1 className="text-2xl md:text-3xl font-bold text-white hover:text-gray-100 transition-colors">
-                    MyGameList
-                </h1>
+            {/* Navigation Bar */}
+            <div className="bg-[#2F25B1] flex items-center justify-between px-16 py-3">
+                {/* TO DO: Navigation options */}
+                <span className="text-xl">Games</span>
 
-                <div className="flex items-center space-x-4">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                                variant="ghost"
-                                className="flex items-center space-x-2 bg-indigo-900/50 hover:bg-indigo-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-indigo-700">
-                                <User className="h-5 w-5 text-indigo-300" />
-                                <span className="text-indigo-100 font-medium">Randomname23</span>
-                                <ChevronDown className="h-4 w-4 text-indigo-300" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56 bg-gray-800/90 backdrop-blur-lg border border-gray-700">
-                            <DropdownMenuLabel className="text-indigo-100">My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator className="bg-gray-700" />
-                            <DropdownMenuItem className="focus:bg-indigo-900/50 focus:text-indigo-100 cursor-pointer">
-                                Profile
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="focus:bg-indigo-900/50 focus:text-indigo-100 cursor-pointer">
-                                Settings
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="focus:bg-indigo-900/50 focus:text-indigo-100 cursor-pointer">
-                                Subscriptions
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-gray-700" />
-                            <DropdownMenuItem className="focus:bg-rose-900/50 focus:text-rose-100 cursor-pointer">
-                                Logout
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                {/* TO DO: Search bar */}
+            </div>
+
+            {/* Main Content */}
+            <main className="flex-grow">{children}</main>
+
+            {/* Bottom Page */}
+            <footer className="relative">
+                <div className="bg-black">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                        preserveAspectRatio="none" className="w-full h-40">
+                        <path
+                            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+                            className="fill-[#2F25B1]">
+                        </path>
+                    </svg>
                 </div>
-            </header>
 
-            <div className="relative z-10 p-6 md:p-10 text-white">
-                {children}
-            </div>
-
-            <div className="absolute bottom-0 left-0 w-full z-0 h-60 md:h-80">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1440 320"
-                    className="block w-full h-full"
-                    preserveAspectRatio="none">
-                    <defs>
-                        <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#5b7cfa" stopOpacity="0.8" />
-                            <stop offset="50%" stopColor="#7b9bfa" stopOpacity="0.9" />
-                            <stop offset="100%" stopColor="#9bbbfa" stopOpacity="0.7" />
-                        </linearGradient>
-                    </defs>
-                    <path
-                        fill="url(#waveGradient)"
-                        d="M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,160C672,160,768,192,864,192C960,192,1056,160,1152,149.3C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-                    ></path>
-                </svg>
-            </div>
+                <div className="bg-[#2F25B1] px-16 py-8 text-center flex items-center justify-end">
+                    <Link href="https://steamcommunity.com/id/faina2k24/">
+                        <Image src="/steam-logo-black-transparent.png" alt="Steam Logo" width={60} height={20}/>
+                    </Link>
+                </div>
+            </footer>
         </div>
     );
 };
