@@ -1,4 +1,4 @@
-import HomePageSections from "@/components/ui/HomePageSections";
+import HomePageSections from "@/components/HomePageSections";
 
 export default function Home() {
   return (

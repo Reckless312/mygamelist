@@ -10,7 +10,7 @@ export default function GameManager() {
     useEffect(() => {
         const fetchGames = async () => {
             try {
-                const response = await fetch(`https://nodejs-serverless-function-express-gamma-one.vercel.app/api/games`);
+                const response = await fetch(`https://nodejs-serverless-function-express-gamma-one.vercel.app/api/games/sort`);
                 const games = await response.json();
                 setNewGames?.(games);
             }
