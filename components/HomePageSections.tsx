@@ -1,7 +1,7 @@
 'use client';
 
 import {useGames} from "@/components/GamesContext";
-import {HomePageContentBox} from "@/components/HomePageContentBox";
+import {MainPageGameShowcase} from "@/components/MainPageGameShowcase";
 
 export default function HomePageSections() {
     const {games} = useGames() || {};
@@ -18,8 +18,8 @@ export default function HomePageSections() {
 
     return (
         <div>
-            {thisYearReleases.length > 2 && (<HomePageContentBox games={thisYearReleases} title={`${currentYear} Releases`}/>)}
-            {previousYearReleases.length -1 && (<HomePageContentBox games={previousYearReleases} title={`${previousYear} Releases`} />)}
+            {thisYearReleases.length > 2 && (<MainPageGameShowcase games={thisYearReleases} title={`${currentYear} Releases`}/>)}
+            {previousYearReleases.length -1 && (<MainPageGameShowcase games={previousYearReleases} title={`${previousYear} Releases`} />)}
         </div>
     );
 }

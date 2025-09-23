@@ -26,8 +26,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
                 {/* Navigation Bar */}
                 <div className="bg-[#2F25B1] flex items-center justify-between px-16 py-3">
-                    {/* TO DO: Navigation options */}
-                    <Link href="/games">
+                    <Link href="/search">
                         <span className="text-xl">Games</span>
                     </Link>
 

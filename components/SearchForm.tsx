@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const SearchForm = ({query} : {query ? : string}) => {
     return (
-        <Form action="/games" scroll={false} className="search-form">
+        <Form action="/search" scroll={false} className="search-form">
             <input
                 name="query"
                 defaultValue={query}
