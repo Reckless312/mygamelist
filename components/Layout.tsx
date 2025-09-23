@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {GamesProvider} from "@/components/GamesContext";
 import GameManager from "@/components/GameManager";
+import SearchForm from "@/components/SearchForm";
 
 interface LayoutProps {
     children: ReactNode;
@@ -30,7 +31,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         <span className="text-xl">Games</span>
                     </Link>
 
-                    {/* TO DO: Search bar */}
+                    <SearchForm/>
                 </div>
 
                 {/* Main Content */}

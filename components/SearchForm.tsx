@@ -1,0 +1,23 @@
+import React from 'react';
+import Form from "next/form";
+import Image from "next/image";
+
+const SearchForm = ({query} : {query ? : string}) => {
+    return (
+        <Form action="/games" scroll={false} className="search-form">
+            <input
+                name="query"
+                defaultValue={query}
+                placeholder="Search Games"
+                className="search-input"
+            />
+            <div className="search-button">
+                <button type="submit" className="cursor-pointer">
+                    <Image src="/search.png" alt="search" width={20} height={20}></Image>
+                </button>
+            </div>
+        </Form>
+    )
+}
+
+export default SearchForm;
