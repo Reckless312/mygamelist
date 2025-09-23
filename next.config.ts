@@ -7,13 +7,13 @@ const nextConfig: NextConfig = {
                 protocol: 'https',
                 hostname: 'shared.cloudflare.steamstatic.com',
                 port: '',
-                pathname: '/store_item_assets/**', // allow all images under this path
+                pathname: '/store_item_assets/**',
             },
             {
                 protocol: 'https',
                 hostname: 'shared.steamstatic.com',
                 port: '',
-                pathname: '/store_item_assets/**', // allow all images under this path
+                pathname: '/store_item_assets/**',
             },
         ],
     },

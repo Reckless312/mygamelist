@@ -1,7 +1,7 @@
 'use client';
 
 import {useGames} from "@/components/GamesContext";
-import HomePageContentBox from "@/components/HomePageContentBox";
+import {HomePageContentBox} from "@/components/HomePageContentBox";
 
 export default function HomePageSections() {
     const {games} = useGames() || {};
@@ -10,17 +10,16 @@ export default function HomePageSections() {
         return;
     }
 
-    console.log(games);
+    const currentYear = new Date().getFullYear().toString();
+    const previousYear = (parseInt(currentYear) - 1).toString();
+
+    const previousYearReleases = games.filter(game => game.releaseDate.slice(0, 4) === previousYear);
+    const thisYearReleases = games.filter(game => game.releaseDate.slice(0, 4) === currentYear);
+
     return (
         <div>
-            <HomePageContentBox spanContent={"Upcoming Releases"}
-                                leftImage={games[0].banner_url}
-                                centerImage={"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2161700/header.jpg?t=1741697885'"}
-                                rightImage={"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2161700/header.jpg?t=1741697885'"}/>
-            <HomePageContentBox spanContent={"Upcoming Releases"}
-                                leftImage={"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2161700/header.jpg?t=1741697885'"}
-                                centerImage={"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2161700/header.jpg?t=1741697885'"}
-                                rightImage={"https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2161700/header.jpg?t=1741697885'"}/>
+            {thisYearReleases.length > 2 && (<HomePageContentBox games={thisYearReleases} title={`${currentYear} Releases`}/>)}
+            {previousYearReleases.length -1 && (<HomePageContentBox games={previousYearReleases} title={`${previousYear} Releases`} />)}
         </div>
     );
 }

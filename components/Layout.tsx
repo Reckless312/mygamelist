@@ -15,7 +15,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="flex flex-col min-h-screen bg-black text-white font-mono">
                 {/* Top Bar */}
                 <div className="bg-[#0F0F14] flex items-center justify-between px-16 py-5">
-                    <header className="text-3xl">MyGameList</header>
+                    <Link href="/">
+                        <header className="text-3xl">MyGameList</header>
+                    </Link>
 
                     {/* TO DO: Right side with profile */}
                     <div></div>
