@@ -13,8 +13,8 @@ export default function SearchResultsBar({length, query, onSortChange, currentSo
             {query !== '' && (
                 <h2 className="text-lg font-mono text-white">
                     <span className="text-[#2F25B1] font-semibold">{length}</span>
-                    <span className="text-white">{length === 1 ?' game' : ' search'} found for "</span>
-                    <span className="text-gray-400">{query}</span>"
+                    <span className="text-white">{length === 1 ?' game' : ' search'} found for &quot;</span>
+                    <span className="text-gray-400">{query}</span>&quot;
                 </h2>
             )}
 

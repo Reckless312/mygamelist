@@ -6,6 +6,7 @@ import Image from "next/image";
 import {useEffect, useMemo, useState} from "react";
 import SearchResultsBar from "@/components/SearchResultsBar";
 import SearchPagination from "@/components/SearchPagination";
+import Link from "next/link";
 
 export default function SearchedGames({ query }: { query: string }) {
     const { games } = useGames() || {};
@@ -50,15 +51,17 @@ export default function SearchedGames({ query }: { query: string }) {
                 games={sortedGames}
                 query={query}
                 renderGameAction={(game) => (
-                    <Card key={game.id} className="flex gap-4 p-4 shadow-sm bg-[#0F0F14] border-0 text-white items-start h-40">
-                        <Image src={game.banner_url} alt={game.name} width={140} height={60} className="rounded-md object-cover"/>
-                        <div className="flex flex-col justify-between">
-                            <div>
-                                <h2 className="text-lg font-semibold">{game.name}</h2>
-                                <p className="text-sm text-muted-foreground">Release: {game.releaseDate}</p>
+                    <Link href={`/game/${game.id}`} key={game.id}>
+                        <Card key={game.id} className="flex gap-4 p-4 shadow-sm bg-[#0F0F14] border-0 text-white items-start h-40">
+                            <Image src={game.banner_url} quality={100} alt={game.name} width={140} height={60} className="rounded-md object-cover"/>
+                            <div className="flex flex-col justify-between">
+                                <div>
+                                    <h2 className="text-lg font-semibold">{game.name}</h2>
+                                    <p className="text-sm text-muted-foreground">Release: {game.releaseDate}</p>
+                                </div>
                             </div>
-                        </div>
-                    </Card>
+                        </Card>
+                    </Link>
                 )}
             />
         </div>

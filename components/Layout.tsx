@@ -15,22 +15,26 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <GameManager/>
             <div className="flex flex-col min-h-screen bg-black text-white font-mono">
                 {/* Top Bar */}
-                <div className="bg-[#0F0F14] flex items-center justify-between px-16 py-5">
+                <div className="bg-[#0F0F14] flex flex-col sm:flex-row items-center sm:justify-between px-4 sm:px-16 py-5 gap-2 sm:gap-0">
                     <Link href="/">
-                        <header className="text-3xl">MyGameList</header>
+                        <header className="text-3xl text-center sm:text-left">MyGameList</header>
                     </Link>
 
-                    {/* TO DO: Right side with profile */}
-                    <div></div>
+                    <div className="w-full sm:w-auto flex justify-center sm:justify-end">
+                    </div>
                 </div>
 
                 {/* Navigation Bar */}
-                <div className="bg-[#2F25B1] flex items-center justify-between px-16 py-3">
-                    <Link href="/search">
-                        <span className="text-xl">Games</span>
-                    </Link>
+                <div className="bg-[#2F25B1] flex flex-col sm:flex-row items-center sm:justify-between px-4 sm:px-16 py-3 gap-3 sm:gap-0">
+                    <div className="w-full sm:w-auto flex justify-center sm:justify-start">
+                        <Link href="/search">
+                            <span className="text-xl">Games</span>
+                        </Link>
+                    </div>
 
-                    <SearchForm/>
+                    <div className="w-full sm:w-auto flex justify-center">
+                        <SearchForm />
+                    </div>
                 </div>
 
                 {/* Main Content */}

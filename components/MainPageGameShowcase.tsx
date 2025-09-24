@@ -7,6 +7,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import {Game} from "@/components/GamesContext";
+import Link from "next/link";
 
 export function MainPageGameShowcase({games, title}: Props) {
     return (
@@ -17,8 +18,10 @@ export function MainPageGameShowcase({games, title}: Props) {
                     {games.map((game, index) => (
                         <CarouselItem key={index} className="pl-6 basis-2/3 sm:basis-2/5 md:basis-1/6">
                             <div className="relative aspect-[16/9] overflow-hidden rounded-lg">
-                                <Image src={game.banner_url} alt={`${game.name || 'Game'} banner`} fill
-                                       className="object-cover hover:scale-105 transition-transform duration-300"/>
+                                <Link href={`/game/${game.id}`}>
+                                    <Image src={game.banner_url} alt={`${game.name || 'Game'} banner`} fill quality={100} priority={index === 0}
+                                           className="object-cover hover:scale-105 transition-transform duration-300"/>
+                                </Link>
                             </div>
                         </CarouselItem>
                     ))}
