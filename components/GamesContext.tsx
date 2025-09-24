@@ -9,8 +9,12 @@ export type Game = {
     banner_url: string;
     releaseDate: string;
     price: number;
-    images: string[];
+    Game_Images: Images[];
     tags: string[];
+}
+
+export type Images = {
+    image_url: string;
 }
 
 type GamesContextType = {
