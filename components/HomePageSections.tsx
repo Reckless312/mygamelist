@@ -19,7 +19,7 @@ export default function HomePageSections() {
     return (
         <div>
             {thisYearReleases.length > 2 && (<MainPageGameShowcase games={thisYearReleases} title={`${currentYear} Releases`}/>)}
-            {previousYearReleases.length -1 && (<MainPageGameShowcase games={previousYearReleases} title={`${previousYear} Releases`} />)}
+            {previousYearReleases.length > 2 && (<MainPageGameShowcase games={previousYearReleases} title={`${previousYear} Releases`} />)}
         </div>
     );
 }

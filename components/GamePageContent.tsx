@@ -16,15 +16,18 @@ export default function GamePageContent() {
 
     const game = games.find(game => game.id === parseInt(id?.toString() || '-1'));
 
-    {/* TO DO: Switch to 404*/}
     if (!game) {
-        return null;
+        return (
+            <div className="flex flex-col items-center justify-center h-128">
+                <h1 className={"text-3xl"}>404 - Not Found</h1>
+            </div>
+        )
     }
 
     return (
         <div className="bg-gradient-to-b from-gray-900 via-gray-950 to-black text-white">
             <div className="max-w-5xl mx-auto px-4 py-7">
-                <h1 className="text-2xl md:text-4xl font-bold mb-10 font-mono bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                <h1 className="text-2xl md:text-4xl font-mono mb-10 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                     {game.name}
                 </h1>
 
