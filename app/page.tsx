@@ -1,19 +1,13 @@
 import Layout from "@/components/layout/Layout";
-import {fetchGames} from "@/lib";
+import {fetchGamesFromYear} from "@/lib";
 import {Showcase} from "@/components/main page/Showcase";
 
 export default async function Home() {
-    const games = await fetchGames();
-
-    if (games.length == 0) {
-        return <Layout><div></div></Layout>
-    }
-
     const currentYear = new Date().getFullYear().toString();
     const previousYear = (parseInt(currentYear) - 1).toString();
 
-    const previousYearReleases = games.filter(game => game.releaseDate.slice(0, 4) === previousYear);
-    const thisYearReleases = games.filter(game => game.releaseDate.slice(0, 4) === currentYear);
+    const previousYearReleases = await fetchGamesFromYear(previousYear);
+    const thisYearReleases = await fetchGamesFromYear(currentYear);
 
     return (
       <Layout>

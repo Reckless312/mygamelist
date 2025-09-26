@@ -26,6 +26,24 @@ export async function fetchGame(id: string) : Promise<Game | null> {
     return await response.json();
 }
 
+export async function fetchGamesFromYear(year: string) : Promise<Game[]> {
+    const response = await fetch(`http://localhost:8080/api/games/filter/year`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            year: year
+        })
+    });
+
+    if (!response.ok) {
+        return [];
+    }
+
+    return await response.json();
+}
+
 export type Images = {
     image_url: string;
 }
