@@ -1,7 +1,6 @@
 'use client'
 
 import React, {useState} from "react";
-import {useGames} from "@/components/GamesContext";
 
 const statusFilters = [
     { key: "all", label: "All Games" },
@@ -14,7 +13,7 @@ const statusFilters = [
 
 export default function GameList() {
     const [activeFilter, setActiveFilter] = useState("all");
-    const {games} = useGames() || {};
+    // const {games} = useGames() || {};
 
     return (<div className="w-full max-w-6xl bg-black/60 backdrop-blur-sm rounded-2xl border border-[#2F3A67]/30 text-gray-200 mr-12 overflow-hidden">
         <div className="flex justify-between gap-1 border-b border-gray-600/50 p-6 pb-0">

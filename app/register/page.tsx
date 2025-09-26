@@ -1,10 +1,10 @@
-import React from "react";
 import CredentialsForm from "@/components/CredentialsForm";
+import React from "react";
 
-export default function LoginPage() {
+export default function RegisterPage() {
     return (
         <div className="flex-1 flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url(/under.jpeg)" }}>
-            <CredentialsForm buttonText={"Sing In"} textRedirectPath={"/register"} textRedirect={"Create Account"} newAccount={false}/>
+            <CredentialsForm buttonText={"Register"} textRedirectPath={"/login"} textRedirect={"Sign In"} newAccount={true}/>
         </div>
-    );
+    )
 }

@@ -15,7 +15,8 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const currentPath = usePathname();
-    const onlyHeaderPaths = ['/list', '/login'];
+
+    const onlyHeaderPaths = ['/list', '/login', '/register'];
 
     if (onlyHeaderPaths.includes(currentPath)) {
         return (
@@ -23,12 +24,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <GameManager/>
                 <div className="flex flex-col min-h-screen text-white font-mono">
                     <Header/>
-                    <main className="flex-grow">{children}</main>
+                    <main className="flex-1 flex">{children}</main>
                 </div>
             </GamesProvider>
         )
     }
-
 
     return (
         <GamesProvider>

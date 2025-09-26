@@ -11,10 +11,9 @@ import Link from "next/link";
 export default function SearchedGames({ query }: { query: string }) {
     const { games } = useGames() || {};
 
-    const foundGames =
-        games?.filter((game) =>
-            game.name.toLowerCase().includes(query.toLowerCase())
-        ) || [];
+    const foundGames = useMemo(() => {
+        return games?.filter((game) => game.name.toLowerCase().includes(query.toLowerCase())) || [];
+    }, [games, query]);
 
     const [sortOption, setSortOption] = useState<"name-asc" | "name-desc" | "newest" | "oldest">("name-asc");
 
@@ -27,16 +26,17 @@ export default function SearchedGames({ query }: { query: string }) {
     }, [query]);
 
     const sortedGames = useMemo(() => {
+        const copyOfFoundGames = [...foundGames];
         if (sortOption === "name-asc") {
-            return foundGames.sort((a, b) => a.name.localeCompare(b.name));
+            return copyOfFoundGames.sort((a, b) => a.name.localeCompare(b.name));
         } else if (sortOption === "name-desc") {
-            return foundGames.sort((a, b) => b.name.localeCompare(a.name));
+            return copyOfFoundGames.sort((a, b) => b.name.localeCompare(a.name));
         } else if (sortOption === "newest") {
-            return foundGames.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
+            return copyOfFoundGames.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
         } else if (sortOption === "oldest") {
-            return foundGames.sort((a, b) => a.releaseDate.localeCompare(b.releaseDate));
+            return copyOfFoundGames.sort((a, b) => a.releaseDate.localeCompare(b.releaseDate));
         }
-        return foundGames;
+        return copyOfFoundGames;
     }, [foundGames, sortOption])
 
     if (!games || games.length === 0) {
