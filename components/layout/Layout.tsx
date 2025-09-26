@@ -1,38 +1,15 @@
-'use client'
-
-import React, { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {GamesProvider} from "@/components/GamesContext";
-import GameManager from "@/components/GameManager";
-import SearchForm from "@/components/SearchForm";
-import Header from "@/components/Header";
-import {usePathname} from "next/navigation";
+import SearchBar from "@/components/layout/SearchBar";
+import Header from "@/components/layout/Header";
+import React, {ReactNode} from "react";
 
 interface LayoutProps {
     children: ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-    const currentPath = usePathname();
-
-    const onlyHeaderPaths = ['/list', '/login', '/register'];
-
-    if (onlyHeaderPaths.includes(currentPath)) {
-        return (
-            <GamesProvider>
-                <GameManager/>
-                <div className="flex flex-col min-h-screen text-white font-mono">
-                    <Header/>
-                    <main className="flex-1 flex">{children}</main>
-                </div>
-            </GamesProvider>
-        )
-    }
-
     return (
-        <GamesProvider>
-            <GameManager/>
             <div className="flex flex-col min-h-screen bg-black text-white font-mono">
                 <Header/>
                 <div className="bg-[#2F25B1] flex flex-col sm:flex-row items-center sm:justify-between px-4 sm:px-16 py-3 gap-3 sm:gap-0">
@@ -43,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     </div>
 
                     <div className="w-full sm:w-auto flex justify-center">
-                        <SearchForm />
+                        <SearchBar />
                     </div>
                 </div>
 
@@ -67,7 +44,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     </div>
                 </footer>
             </div>
-        </GamesProvider>
     );
 };
 

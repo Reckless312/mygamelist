@@ -1,15 +1,9 @@
 import Image from "next/image";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from "@/components/ui/carousel"
-import {Game} from "@/components/GamesContext";
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel"
 import Link from "next/link";
+import {Game} from "@/lib";
 
-export function MainPageGameShowcase({games, title}: Props) {
+export function Showcase({games, title}: Props) {
     return (
         <div className="flex flex-col mt-6 px-4 sm:px-16 py-6">
             <span className="text-center md:text-start font-mono text-xl mb-4">{title}</span>

@@ -6,7 +6,7 @@ import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 
-export default function CredentialsForm({buttonText, textRedirectPath, textRedirect, newAccount}: { buttonText: string, textRedirectPath: string, textRedirect:string, newAccount: boolean}) {
+export default function Credentials({buttonText, textRedirectPath, textRedirect, newAccount}: { buttonText: string, textRedirectPath: string, textRedirect:string, newAccount: boolean}) {
     const router = useRouter();
 
     const [username, setUsername] = useState("");
@@ -36,7 +36,7 @@ export default function CredentialsForm({buttonText, textRedirectPath, textRedir
         router.push("/");
     }
 
-    return (<Form onSubmit={handleSubmit} action="/" scroll={false} className="w-full max-w-md">
+    return (<Form onSubmit={handleSubmit} action="/public" scroll={false} className="w-full max-w-md">
         <div className="bg-[#0F0F14]/80 rounded p-8">
             <div className="space-y-6">
                 <label htmlFor="username" className="text-blue-400 text-sm font-mono">

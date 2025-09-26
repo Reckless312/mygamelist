@@ -1,29 +1,8 @@
-'use client'
-
-import {useGames} from "@/components/GamesContext";
-import {useParams} from "next/navigation";
-import GamePageShowcase from "@/components/GamePageShowcase";
+import Showcase from "@/components/game page/Showcase";
 import Image from "next/image";
+import {Game} from "@/lib";
 
-export default function GamePageContent() {
-    const {games} = useGames() || {};
-    const params = useParams()
-    const id = params.id;
-
-    if (!games || games.length === 0) {
-        return null;
-    }
-
-    const game = games.find(game => game.id === parseInt(id?.toString() || '-1'));
-
-    if (!game) {
-        return (
-            <div className="flex flex-col items-center justify-center h-128">
-                <h1 className={"text-3xl"}>404 - Not Found</h1>
-            </div>
-        )
-    }
-
+export default async function Card({game}: {game: Game}) {
     return (
         <div className="bg-gradient-to-b from-gray-900 via-gray-950 to-black text-white">
             <div className="max-w-5xl mx-auto px-4 py-7">
@@ -33,7 +12,7 @@ export default function GamePageContent() {
 
                 <div className="flex flex-col lg:flex-row gap-6">
                     <div className="lg:w-[55%]">
-                        <GamePageShowcase images={game.Game_Images}/>
+                        <Showcase images={game.Game_Images}/>
                     </div>
 
                     <div className="lg:w-[42%] flex flex-col">
@@ -72,5 +51,5 @@ export default function GamePageContent() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
