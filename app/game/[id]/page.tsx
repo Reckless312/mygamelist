@@ -2,7 +2,7 @@ import {fetchGame} from "@/lib";
 import Layout from "@/components/layout/Layout";
 import Card from "@/components/game page/Card";
 
-export default async function GamePage({params}: PageProps) {
+export default async function GamePage({params}: any) {
     const {id} = await params;
 
     if (id === undefined) {
