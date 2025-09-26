@@ -5,6 +5,7 @@ import Form from "next/form";
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
+import {useAuthentication} from "@/components/AuthenticationContext";
 
 export default function Credentials({buttonText, textRedirectPath, textRedirect, newAccount}: { buttonText: string, textRedirectPath: string, textRedirect:string, newAccount: boolean}) {
     const router = useRouter();
@@ -12,12 +13,17 @@ export default function Credentials({buttonText, textRedirectPath, textRedirect,
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const {setIsAuthenticated} = useAuthentication() || {};
 
     const handleSubmit = async (formEvent: React.FormEvent<HTMLFormElement>) => {
         formEvent.preventDefault();
         setErrorMessage("");
 
-        const apiRoute = newAccount ? "http://localhost:8080/api/register" : "http://localhost:8080/api/login";
+        const apiRoute = newAccount ? process.env.NEXT_PUBLIC_API_REGISTER : process.env.NEXT_PUBLIC_API_LOGIN;
+
+        if (apiRoute === undefined) {
+            return;
+        }
 
         const response = await fetch(apiRoute, {
             method: "POST",
@@ -32,6 +38,8 @@ export default function Credentials({buttonText, textRedirectPath, textRedirect,
             setErrorMessage(await data.message);
             return;
         }
+
+        setIsAuthenticated(true);
 
         router.push("/");
     }

@@ -1,5 +1,9 @@
 export async function fetchGames() : Promise<Game[]> {
-    const response = await fetch("http://localhost:8080/api/games")
+    if (!process.env.API_ALL_GAMES) {
+        return [];
+    }
+
+    const response = await fetch(process.env.API_ALL_GAMES)
 
     if (!response.ok) {
         return [];
@@ -9,7 +13,11 @@ export async function fetchGames() : Promise<Game[]> {
 }
 
 export async function fetchGame(id: string) : Promise<Game | null> {
-    const response = await fetch(`http://localhost:8080/api/games/filter/id`, {
+    if (!process.env.API_ONE_GAME) {
+        return null;
+    }
+
+    const response = await fetch(process.env.API_ONE_GAME, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -27,7 +35,11 @@ export async function fetchGame(id: string) : Promise<Game | null> {
 }
 
 export async function fetchGamesFromYear(year: string) : Promise<Game[]> {
-    const response = await fetch(`http://localhost:8080/api/games/filter/year`, {
+    if (!process.env.API_GAMES_BY_YEAR) {
+        return [];
+    }
+
+    const response = await fetch(process.env.API_GAMES_BY_YEAR, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
