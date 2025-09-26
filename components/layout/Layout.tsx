@@ -1,17 +1,37 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "@/components/layout/SearchBar";
 import Header from "@/components/layout/Header";
-import React, {ReactNode} from "react";
+import React, {ReactNode, useEffect, useState} from "react";
 
 interface LayoutProps {
     children: ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+    const [username, setUsername] = useState<string>();
+
+    useEffect(() => {
+        const getUsername = async () => {
+            const response = await fetch("http://localhost:8080/api/hq", {
+                credentials: "include"
+            })
+
+            if (response.status !== 200) {
+                setUsername("");
+            }
+
+            const data = await response.json();
+            setUsername(data.username);
+        }
+
+        getUsername().then();
+    }, [])
+
     return (
             <div className="flex flex-col min-h-screen bg-black text-white font-mono">
-                <Header/>
+                <Header username={username}/>
                 <div className="bg-[#2F25B1] flex flex-col sm:flex-row items-center sm:justify-between px-4 sm:px-16 py-3 gap-3 sm:gap-0">
                     <div className="w-full sm:w-auto flex justify-center sm:justify-start">
                         <Link href="/search">

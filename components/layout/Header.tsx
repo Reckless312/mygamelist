@@ -1,9 +1,13 @@
+'use client'
+
 import Link from "next/link";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 
-export default function Header() {
+export default function Header({username} : {username : string}) {
+    const isLoggedIn = username !== "";
+
     return (
         <div className="bg-[#0F0F14] flex flex-col sm:flex-row items-center sm:justify-between px-4 sm:px-16 py-5 gap-2 sm:gap-0">
             <Link href="/">
@@ -11,7 +15,7 @@ export default function Header() {
             </Link>
 
             <div className="w-full sm:w-auto flex justify-center sm:justify-end gap-6">
-                <DropdownMenu>
+                {isLoggedIn && <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <button className="hover:opacity-80 transition-opacity cursor-pointer">
                             <Image src={"/menu.png"} alt={"list-menu"} width={30} height={30}/>
@@ -24,12 +28,13 @@ export default function Header() {
                             </DropdownMenuItem>
                         </Link>
                     </DropdownMenuContent>
-                </DropdownMenu>
-                <Link href={"/login"}>
+                </DropdownMenu>}
+                {!isLoggedIn &&
+                    <Link href={"/login"}>
                     <Button className="bg-[#323237] text-white flex items-center h-7 w-19 cursor-pointer">
                         Sign in
                     </Button>
-                </Link>
+                </Link>}
             </div>
         </div>);
 }
