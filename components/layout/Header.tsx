@@ -23,7 +23,7 @@ export default function Header() {
     }
 
     if (isAuthenticated === undefined) {
-        return null;   
+        return null;
     }
 
     return (
