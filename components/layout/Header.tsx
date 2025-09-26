@@ -5,6 +5,7 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import {useAuthentication} from "@/components/AuthenticationContext";
+import {ChevronDown} from "lucide-react";
 
 export default function Header() {
     const {username, isAuthenticated, setIsAuthenticated} = useAuthentication() || {};
@@ -35,7 +36,7 @@ export default function Header() {
             {isAuthenticated && (
                 <div className="w-full sm:w-auto flex justify-center sm:justify-end gap-6">
                     <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
+                        <DropdownMenuTrigger className={"focus:outline-none focus:ring-0"} asChild>
                             <button className="hover:opacity-80 transition-opacity cursor-pointer">
                                 <Image src={"/menu.png"} alt={"list-menu"} width={30} height={30}/>
                             </button>
@@ -48,11 +49,24 @@ export default function Header() {
                             </Link>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Link href={"/"}>
-                        <Button onClick={onLogout} className="bg-[#323237] text-white flex items-center h-7 w-19 cursor-pointer">
-                            Logout
-                        </Button>
-                    </Link>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className={"focus:outline-none focus:ring-0"} asChild>
+                            <button className="hover:opacity-80 transition-opacity cursor-pointer">
+                                <div className={"flex flex-row items-center gap-2 text-white font-mono"}>
+                                    <span>{username}</span>
+                                    <ChevronDown className="w-4 h-4" />
+                                </div>
+                            </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="bg-[#0F0F14] border border-gray-700 text-white min-w-[150px] font-mono">
+                            <Link href={"/"}>
+                                <DropdownMenuItem onClick={onLogout} className="hover:bg-gray-700 focus:bg-gray-700 cursor-pointer">
+                                    Logout
+                                </DropdownMenuItem>
+                            </Link>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <Image src={"/profile.png"} alt={"profile-photo"} width={44} height={44}/>
                 </div>
             )}
 
