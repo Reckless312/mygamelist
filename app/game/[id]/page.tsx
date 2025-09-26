@@ -2,10 +2,6 @@ import {fetchGame} from "@/lib";
 import Layout from "@/components/layout/Layout";
 import Card from "@/components/game page/Card";
 
-interface PageProps {
-    params: { id: string };
-}
-
 export default async function GamePage({params}: PageProps) {
     const {id} = await params;
 
