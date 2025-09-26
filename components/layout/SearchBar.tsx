@@ -1,8 +1,7 @@
-import React from 'react';
 import Form from "next/form";
 import Image from "next/image";
 
-const SearchForm = ({query} : {query ? : string}) => {
+const SearchBar = ({query} : {query ? : string}) => {
     return (
         <Form action="/search" scroll={false} className="search-form">
             <input name="query" defaultValue={query} placeholder="Search Games" className="search-input outline-none focus:ring-0 focus:outline-none"/>
@@ -15,4 +14,4 @@ const SearchForm = ({query} : {query ? : string}) => {
     )
 }
 
-export default SearchForm;
+export default SearchBar;

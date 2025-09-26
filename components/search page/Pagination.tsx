@@ -2,9 +2,9 @@
 
 import { useSearchParams } from "next/navigation";
 import React, {useEffect, useRef, useState} from "react";
-import { Game } from "@/components/GamesContext";
+import {Game} from "@/lib";
 
-export default function SearchPagination({games, query, renderGameAction,}: { games: Game[]
+export default function Pagination({games, query, renderGameAction}: { games: Game[]
     query: string; renderGameAction: (game: Game) => React.ReactNode; }) {
 
     const searchParams = useSearchParams();
@@ -45,7 +45,6 @@ export default function SearchPagination({games, query, renderGameAction,}: { ga
     return (
         <>
             {gamesOnPage.map((game) => renderGameAction(game))}
-
             {gamesOnPage.length < games.length && (
                 <div ref={loaderRef} className="h-10" />
             )}

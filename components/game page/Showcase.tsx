@@ -1,8 +1,10 @@
+'use client'
+
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
 import Image from "next/image";
-import {Images} from "@/components/GamesContext";
+import {Images} from "@/lib";
 
-export default function GamePageShowcase({images}: {images: Images[]}) {
+export default function Showcase({images}: {images: Images[]}) {
     return (
         <div className="w-full border border-gray-700 rounded-lg overflow-hidden shadow-xl">
             <Carousel className="w-full">

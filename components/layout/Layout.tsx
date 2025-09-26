@@ -1,42 +1,17 @@
-'use client'
-
-import React, { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {GamesProvider} from "@/components/GamesContext";
-import GameManager from "@/components/GameManager";
-import SearchForm from "@/components/SearchForm";
-import Header from "@/components/Header";
-import {usePathname} from "next/navigation";
+import SearchBar from "@/components/layout/SearchBar";
+import Header from "@/components/layout/Header";
+import React, {ReactNode} from "react";
 
 interface LayoutProps {
     children: ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-    const currentPath = usePathname();
-    const noSearchPaths = ['/list'];
-
-    if (noSearchPaths.includes(currentPath)) {
-        return (
-            <GamesProvider>
-                <GameManager/>
-                <div className="flex flex-col min-h-screen text-white font-mono">
-                    <Header/>
-                    <main className="flex-grow">{children}</main>
-                </div>
-            </GamesProvider>
-        )
-    }
-
-
     return (
-        <GamesProvider>
-            <GameManager/>
             <div className="flex flex-col min-h-screen bg-black text-white font-mono">
                 <Header/>
-
-                {/* Navigation Bar */}
                 <div className="bg-[#2F25B1] flex flex-col sm:flex-row items-center sm:justify-between px-4 sm:px-16 py-3 gap-3 sm:gap-0">
                     <div className="w-full sm:w-auto flex justify-center sm:justify-start">
                         <Link href="/search">
@@ -45,14 +20,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     </div>
 
                     <div className="w-full sm:w-auto flex justify-center">
-                        <SearchForm />
+                        <SearchBar />
                     </div>
                 </div>
 
-                {/* Main Content */}
                 <main className="flex-grow">{children}</main>
 
-                {/* Bottom Page */}
                 <footer className="relative mt-6">
                     <div className="bg-black">
                         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
@@ -71,7 +44,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     </div>
                 </footer>
             </div>
-        </GamesProvider>
     );
 };
 

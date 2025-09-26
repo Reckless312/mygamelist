@@ -1,12 +1,8 @@
-import {
-    DropdownMenu,
-    DropdownMenuContent, DropdownMenuItem,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
 import {ChevronDown} from "lucide-react";
 
-export default function SearchResultsBar({length, query, onSortChange, currentSortOption}: {length: number, query: string,
+export default function SortAndStatistics({length, query, onSortChange, currentSortOption}: {length: number, query: string,
     onSortChange: (sort: "name-asc" | "name-desc" | "newest" | "oldest") => void, currentSortOption: "name-asc" | "name-desc" | "newest" | "oldest"}) {
     return (
         <div className="mb-4 pb-2 border-b border-gray-700 flex justify-between items-center">
