@@ -1,8 +1,19 @@
+'use client'
+
 import Showcase from "@/components/game page/Showcase";
 import Image from "next/image";
-import {Game} from "@/lib";
+import {checkItemInList, Game} from "@/lib";
+import {useEffect, useRef, useState} from "react";
+import {useAuthentication} from "@/components/AuthenticationContext";
 
-export default async function Card({game}: {game: Game}) {
+export default function Card({game}: {game: Game}) {
+    const [isInList, setIsInList] = useState<boolean | null>(null);
+    const {username} = useAuthentication() || {};
+
+    useEffect(() => {
+        checkItemInList(username, game.id.toString()).then((result) => {setIsInList(result);});
+    }, [username])
+
     return (
         <div className="bg-gradient-to-b from-gray-900 via-gray-950 to-black text-white">
             <div className="max-w-5xl mx-auto px-4 py-7">

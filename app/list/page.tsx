@@ -2,7 +2,7 @@ import React from 'react';
 import List from "@/components/list/List";
 import Header from "@/components/layout/Header";
 
-export default function ListPage() {
+export default async function ListPage() {
     return (
         <div className="flex flex-col min-h-screen  text-white font-mono">
             <Header/>
