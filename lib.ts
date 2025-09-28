@@ -78,31 +78,6 @@ export async function fetchUserList(username: string) : Promise<ListItem[]> {
     return await response.json();
 }
 
-export async function checkItemInList(username: string, gameId: string) : Promise<boolean | null> {
-    if (!process.env.NEXT_PUBLIC_API_CHECK_ITEM_IN_LIST) {
-        return null;
-    }
-
-    const response = await fetch(process.env.NEXT_PUBLIC_API_CHECK_ITEM_IN_LIST, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username,
-            gameId: gameId
-        })
-    });
-
-    if (!response.ok) {
-        return null;
-    }
-
-    const data = await response.json();
-
-    return data.isInList;
-}
-
 export async function addItemToList(username: string, gameId: string) : Promise<boolean> {
     if (!process.env.NEXT_PUBLIC_API_ADD_ITEM_TO_LIST) {
         return false;
@@ -181,6 +156,29 @@ export async function updateScoreFromItem(username: string, gameId: string, scor
     return response.ok;
 }
 
+export async function getListItem(username: string, gameId: string) : Promise<ListItem | null> {
+    if (!process.env.NEXT_PUBLIC_API_GET_LIST_ITEM) {
+        return null;
+    }
+
+    const response = await fetch(process.env.NEXT_PUBLIC_API_GET_LIST_ITEM, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: username,
+            gameId: gameId
+        })
+    })
+
+    if (!response.ok) {
+        return null;
+    }
+
+    return await response.json();
+}
+
 export type Images = {
     image_url: string;
 }
@@ -204,9 +202,9 @@ export type ListItem = {
 
 export const statusFilters = [
     { key: "all", label: "All Games" },
-    { key: "currently-playing", label: "Currently Playing" },
-    { key: "completed", label: "Completed" },
-    { key: "on-hold", label: "On Hold" },
-    { key: "dropped", label: "Dropped" },
-    { key: "plan-to-play", label: "Plan to Play" },
+    { key: "Currently Playing", label: "Currently Playing" },
+    { key: "Completed", label: "Completed" },
+    { key: "On Hold", label: "On Hold" },
+    { key: "Dropped", label: "Dropped" },
+    { key: "Plan To Play", label: "Plan to Play" },
 ];

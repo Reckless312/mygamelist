@@ -38,7 +38,7 @@ export default function List() {
                 <tbody>
                 {listItems.filter((item: ListItem) => item.status == activeFilter).map((item: ListItem, index: number) => (
                     <tr key={item.game.id} className="border-b border-gray-800/30 hover:bg-[#2F3A67]/10 transition-colors duration-200 group">
-                        <td className="p-4 text-sm font-mono text-gray-400 group-hover:text-[#4A5D8A] transition-colors">
+                        <td className="p-4 text-sm font-mono text-white group-hover:text-[#4A5D8A] transition-colors">
                             {index + 1}
                         </td>
                         <td className="p-4">
@@ -46,9 +46,9 @@ export default function List() {
                                 {item.game.name}
                             </div>
                         </td>
-                        <td className="p-4">
-                            <span className={`font-mono text-lg text-[#8B9DC3]`}>
-                                {item.score}
+                        <td className="p-4 text-center">
+                            <span className={`font-mono text-lg text-white`}>
+                                {item.score === 0 ? '-' : `${item.score}` }
                             </span>
                         </td>
                         {/*<td className="p-4 text-sm text-gray-300 group-hover:text-gray-200 transition-colors">*/}
