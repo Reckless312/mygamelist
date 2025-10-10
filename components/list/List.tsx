@@ -36,7 +36,7 @@ export default function List() {
                 </tr>
                 </thead>
                 <tbody>
-                {listItems.filter((item: ListItem) => item.status == activeFilter).map((item: ListItem, index: number) => (
+                {listItems.filter((item: ListItem) => item.status == activeFilter || activeFilter == "all").map((item: ListItem, index: number) => (
                     <tr key={item.game.id} className="border-b border-gray-800/30 hover:bg-[#2F3A67]/10 transition-colors duration-200 group">
                         <td className="p-4 text-sm font-mono text-white group-hover:text-[#4A5D8A] transition-colors">
                             {index + 1}
