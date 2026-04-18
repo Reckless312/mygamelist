@@ -6,6 +6,7 @@ import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 import {useAuthentication} from "@/components/AuthenticationContext";
+import {routes} from "@/lib/apiRequest";
 
 export default function Credentials({buttonText, textRedirectPath, textRedirect, newAccount}: { buttonText: string, textRedirectPath: string, textRedirect:string, newAccount: boolean}) {
     const router = useRouter();
@@ -19,11 +20,7 @@ export default function Credentials({buttonText, textRedirectPath, textRedirect,
         formEvent.preventDefault();
         setErrorMessage("");
 
-        const apiRoute = newAccount ? process.env.NEXT_PUBLIC_API_REGISTER : process.env.NEXT_PUBLIC_API_LOGIN;
-
-        if (apiRoute === undefined) {
-            return;
-        }
+        const apiRoute = newAccount ? routes.auth.register : routes.auth.login;
 
         const response = await fetch(apiRoute, {
             method: "POST",

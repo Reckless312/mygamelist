@@ -6,16 +6,13 @@ import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import {useAuthentication} from "@/components/AuthenticationContext";
 import {ChevronDown} from "lucide-react";
+import {routes} from "@/lib/apiRequest";
 
 export default function Header() {
     const {username, isAuthenticated, setIsAuthenticated} = useAuthentication() || {};
 
     const onLogout = async () => {
-        if (process.env.NEXT_PUBLIC_API_LOGOUT === undefined) {
-            return;
-        }
-
-        await fetch(process.env.NEXT_PUBLIC_API_LOGOUT, {
+        await fetch(routes.auth.logout, {
             method: "POST",
             credentials: "include"
         })

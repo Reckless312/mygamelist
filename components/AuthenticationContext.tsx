@@ -4,9 +4,11 @@ import React, {createContext, useState} from "react";
 
 type AuthenticationContextType = {
     isAuthenticated: boolean | undefined;
-    username: string
+    username: string;
+    isServerDown: boolean;
     setIsAuthenticated: (isAuthenticated: boolean) => void;
     setUsername: (username: string) => void;
+    setIsServerDown: (isServerDown: boolean) => void;
 }
 
 const AuthenticationContext = createContext<AuthenticationContextType | undefined>(undefined);
@@ -14,9 +16,10 @@ const AuthenticationContext = createContext<AuthenticationContextType | undefine
 export function AuthenticationProvider({children}: {children: React.ReactNode}) {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>(undefined);
     const [username, setUsername] = useState<string>("");
+    const [isServerDown, setIsServerDown] = useState<boolean>(false);
 
     return (
-        <AuthenticationContext.Provider value={{isAuthenticated, username, setIsAuthenticated, setUsername}}>
+        <AuthenticationContext.Provider value={{isAuthenticated, username, isServerDown, setIsAuthenticated, setUsername, setIsServerDown}}>
             {children}
         </AuthenticationContext.Provider>
     )

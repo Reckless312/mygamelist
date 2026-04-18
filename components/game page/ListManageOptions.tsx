@@ -2,10 +2,11 @@
 
 import {Button} from "@/components/ui/button";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useAuthentication} from "@/components/AuthenticationContext";
-import {Game, getListItem, ListItem, addItemToList, removeItemFromList, updateStatusFromItem, updateScoreFromItem} from "@/lib";
+import {Game, getListItem, ListItem, addItemToList, removeItemFromList, updateListItem} from "@/lib";
 import {ChevronDown, Plus, Star, Trash2} from "lucide-react";
+import {toast} from "@/lib/toast";
 
 const STATUS_OPTIONS = ['Currently Playing', 'Completed', 'On Hold', 'Dropped', 'Plan to Play'];
 
@@ -15,37 +16,65 @@ export default function ListManageOptions({game}: {game: Game}) {
     const [listItem, setListItem] = useState<ListItem | null | undefined>(undefined);
     const {username} = useAuthentication() || {};
 
-    const refreshListData = async () => {
-        if (!username){
+    const refreshListData = useCallback(async () => {
+        if (!username) {
             return;
         }
 
-        const itemResult = await getListItem(username, game.id.toString());
+        const itemResult = await getListItem(game.id.toString());
 
         setListItem(itemResult);
-    };
+    }, [username, game.id]);
 
     const handleAddToList = async () => {
-        await addItemToList(username, game.id.toString());
+        const ok = await addItemToList(game.id.toString());
+
+        if (ok) {
+            toast.success("Added to list");
+        } else {
+            toast.error("Failed to add to list");
+        }
+
         await refreshListData();
     };
 
     useEffect(() => {
         refreshListData().then();
-    }, [username]);
+    }, [refreshListData]);
 
     const handleStatusChange = async (newStatus: string) => {
-        await updateStatusFromItem(username, game.id.toString(), newStatus);
+        const ok = await updateListItem(game.id.toString(), { status: newStatus });
+
+        if (ok) {
+            toast.success(`Status set to ${newStatus}`);
+        } else {
+            toast.error("Failed to update status");
+        }
+
         await refreshListData();
     };
 
     const handleScoreChange = async (newScore: number) => {
-        await updateScoreFromItem(username, game.id.toString(), newScore);
+        const ok = await updateListItem(game.id.toString(), { score: newScore });
+
+        if (ok) {
+            toast.success(newScore === 0 ? "Score cleared" : `Score set to ${newScore}/10`);
+        } else {
+            toast.error("Failed to update score");
+        }
+
         await refreshListData();
     };
 
     const handleRemoveFromList = async () => {
-        await removeItemFromList(username, game.id.toString());
+        const ok = await removeItemFromList(game.id.toString());
+
+        if (ok) {
+            toast.success("Removed from list");
+        } else {
+            toast.error("Failed to remove from list");
+        }
+
         await refreshListData();
     };
 

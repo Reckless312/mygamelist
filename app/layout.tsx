@@ -4,6 +4,8 @@ import "./globals.css";
 import React from "react";
 import {AuthenticationProvider} from "@/components/AuthenticationContext";
 import AuthenticationManager from "@/components/AuthenticationManager";
+import ServerDownGuard from "@/components/ServerDownGuard";
+import {Toaster} from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +28,8 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AuthenticationProvider>
           <AuthenticationManager/>
+          <ServerDownGuard/>
+          <Toaster position="bottom-right"/>
           {children}
         </AuthenticationProvider>
       </body>

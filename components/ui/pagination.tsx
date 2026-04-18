@@ -5,7 +5,7 @@ import {
   MoreHorizontalIcon,
 } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/tailwind-merge"
 import { Button, buttonVariants } from "@/components/ui/button"
 import Link from "next/link";
 

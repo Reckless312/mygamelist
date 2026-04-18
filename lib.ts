@@ -1,182 +1,122 @@
-export async function fetchGames() : Promise<Game[]> {
-    if (!process.env.API_ALL_GAMES) {
-        return [];
+import { routes } from '@/lib/apiRequest'
+
+export async function fetchGames(): Promise<Game[]> {
+    try {
+        const response = await fetch(routes.games.all)
+
+        if (!response.ok) {
+            return []
+        }
+
+        return response.json()
+    } catch {
+        return []
     }
-
-    const response = await fetch(process.env.API_ALL_GAMES)
-
-    if (!response.ok) {
-        return [];
-    }
-
-    return await response.json();
 }
 
-export async function fetchGame(id: string) : Promise<Game | null> {
-    if (!process.env.API_ONE_GAME) {
-        return null;
+export async function fetchGame(id: string): Promise<Game | null> {
+    try {
+        const response = await fetch(routes.games.one(id))
+
+        if (!response.ok) {
+            return null
+        }
+
+        return response.json()
+    } catch {
+        return null
     }
-
-    const response = await fetch(process.env.API_ONE_GAME, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            id: id
-        })
-    });
-
-    if (!response.ok) {
-        return null;
-    }
-
-    return await response.json();
 }
 
-export async function fetchGamesFromYear(year: string) : Promise<Game[]> {
-    if (!process.env.API_GAMES_BY_YEAR) {
-        return [];
+export async function fetchGamesFromYear(year: string): Promise<Game[]> {
+    try {
+        const response = await fetch(routes.games.byYear(year))
+
+        if (!response.ok) {
+            return []
+        }
+
+        return response.json()
+    } catch {
+        return []
     }
-
-    const response = await fetch(process.env.API_GAMES_BY_YEAR, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            year: year
-        })
-    });
-
-    if (!response.ok) {
-        return [];
-    }
-
-    return await response.json();
 }
 
-export async function fetchUserList(username: string) : Promise<ListItem[]> {
-    if (!process.env.NEXT_PUBLIC_API_USER_LIST) {
-        return [];
+export async function fetchUserList(): Promise<ListItem[]> {
+    try {
+        const response = await fetch(routes.list.all, { credentials: 'include' })
+
+        if (!response.ok) {
+            return []
+        }
+
+        return response.json()
+    } catch {
+        return []
     }
-
-    const response = await fetch(process.env.NEXT_PUBLIC_API_USER_LIST, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username
-        })
-    });
-
-    if (!response.ok) {
-        return [];
-    }
-
-    return await response.json();
 }
 
-export async function addItemToList(username: string, gameId: string) : Promise<boolean> {
-    if (!process.env.NEXT_PUBLIC_API_ADD_ITEM_TO_LIST) {
-        return false;
-    }
-
-    const response = await fetch(process.env.NEXT_PUBLIC_API_ADD_ITEM_TO_LIST, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username,
-            gameId: gameId
+export async function addItemToList(gameId: string): Promise<boolean> {
+    try {
+        const response = await fetch(routes.list.all, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ gameId }),
+            credentials: 'include',
         })
-    });
 
-    return response.ok;
+        return response.ok
+    } catch {
+        return false
+    }
 }
 
-export async function removeItemFromList(username: string, gameId: string) : Promise<boolean> {
-    if (!process.env.NEXT_PUBLIC_API_REMOVE_ITEM_FROM_LIST) {
-        return false;
-    }
-
-    const response = await fetch(process.env.NEXT_PUBLIC_API_REMOVE_ITEM_FROM_LIST, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username,
-            gameId: gameId
+export async function removeItemFromList(gameId: string): Promise<boolean> {
+    try {
+        const response = await fetch(routes.list.one(gameId), {
+            method: 'DELETE',
+            credentials: 'include',
         })
-    });
 
-    return response.ok;
+        return response.ok
+    } catch {
+        return false
+    }
 }
 
-export async function updateStatusFromItem(username: string, gameId: string, status: string) : Promise<boolean> {
-    if (!process.env.NEXT_PUBLIC_API_UPDATE_STATUS_FROM_ITEM) {
-        return false;
-    }
-
-    const response = await fetch(process.env.NEXT_PUBLIC_API_UPDATE_STATUS_FROM_ITEM, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username,
-            gameId: gameId,
-            status: status
+export async function updateListItem(gameId: string, patch: { status?: string; score?: number }): Promise<boolean> {
+    try {
+        const response = await fetch(routes.list.one(gameId), {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(patch),
+            credentials: 'include',
         })
-    })
 
-    return response.ok;
+        return response.ok
+    } catch {
+        return false
+    }
 }
 
-export async function updateScoreFromItem(username: string, gameId: string, score: number) : Promise<boolean> {
-    if (!process.env.NEXT_PUBLIC_API_UPDATE_SCORE_FROM_ITEM) {
-        return false;
+export async function getListItem(gameId: string): Promise<ListItem | null> {
+    try {
+        const response = await fetch(routes.list.one(gameId), { credentials: 'include' })
+
+        if (!response.ok) {
+            return null
+        }
+
+        const data = await response.json()
+
+        if (!data.isInList) {
+            return null
+        }
+
+        return { game: data.game, status: data.status, score: data.score }
+    } catch {
+        return null
     }
-
-    const response = await fetch(process.env.NEXT_PUBLIC_API_UPDATE_SCORE_FROM_ITEM, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username,
-            gameId: gameId,
-            score: score
-        })
-    })
-
-    return response.ok;
-}
-
-export async function getListItem(username: string, gameId: string) : Promise<ListItem | null> {
-    if (!process.env.NEXT_PUBLIC_API_GET_LIST_ITEM) {
-        return null;
-    }
-
-    const response = await fetch(process.env.NEXT_PUBLIC_API_GET_LIST_ITEM, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: username,
-            gameId: gameId
-        })
-    })
-
-    if (!response.ok) {
-        return null;
-    }
-
-    return await response.json();
 }
 
 export type Images = {
@@ -201,10 +141,10 @@ export type ListItem = {
 }
 
 export const statusFilters = [
-    { key: "all", label: "All Games" },
-    { key: "Currently Playing", label: "Currently Playing" },
-    { key: "Completed", label: "Completed" },
-    { key: "On Hold", label: "On Hold" },
-    { key: "Dropped", label: "Dropped" },
-    { key: "Plan To Play", label: "Plan to Play" },
-];
+    { key: 'all', label: 'All Games' },
+    { key: 'Currently Playing', label: 'Currently Playing' },
+    { key: 'Completed', label: 'Completed' },
+    { key: 'On Hold', label: 'On Hold' },
+    { key: 'Dropped', label: 'Dropped' },
+    { key: 'Plan To Play', label: 'Plan to Play' },
+]

@@ -10,7 +10,7 @@ export default function List() {
     const {username} = useAuthentication() || {};
 
     useEffect(() => {
-        fetchUserList(username).then((listItems) => {setListItems(listItems)});
+        fetchUserList().then((listItems) => {setListItems(listItems)});
     }, [username]);
 
     return (
