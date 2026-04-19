@@ -42,6 +42,24 @@ export async function fetchGamesFromYear(year: string): Promise<Game[]> {
     }
 }
 
+export async function fetchPublicUserList(username: string): Promise<ListItem[] | null> {
+    try {
+        const response = await fetch(routes.users.list(username))
+
+        if (response.status === 404) {
+            return null
+        }
+
+        if (!response.ok) {
+            return []
+        }
+
+        return response.json()
+    } catch {
+        return []
+    }
+}
+
 export async function fetchUserList(): Promise<ListItem[]> {
     try {
         const response = await fetch(routes.list.all, { credentials: 'include' })

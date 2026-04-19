@@ -3,17 +3,14 @@ import {fetchGamesFromYear} from "@/lib";
 import {Showcase} from "@/components/main page/Showcase";
 
 export default async function Home() {
-    const currentYear = new Date().getFullYear().toString();
-    const previousYear = (parseInt(currentYear) - 1).toString();
-
-    const previousYearReleases = await fetchGamesFromYear(previousYear);
-    const thisYearReleases = await fetchGamesFromYear(currentYear);
+    const previousYearReleases = await fetchGamesFromYear("2024");
+    const thisYearReleases = await fetchGamesFromYear("2025");
 
     return (
       <Layout>
           <div>
-              {thisYearReleases.length > 2 && (<Showcase games={thisYearReleases} title={`${currentYear} Releases`}/>)}
-              {previousYearReleases.length > 2 && (<Showcase games={previousYearReleases} title={`${previousYear} Releases`} />)}
+              {thisYearReleases.length > 2 && (<Showcase games={thisYearReleases} title="2025 Releases"/>)}
+              {previousYearReleases.length > 2 && (<Showcase games={previousYearReleases} title="2024 Releases"/>)}
           </div>
       </Layout>
     );

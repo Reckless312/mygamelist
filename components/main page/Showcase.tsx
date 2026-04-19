@@ -5,7 +5,7 @@ import {Game} from "@/lib";
 
 export function Showcase({games, title}: Props) {
     return (
-        <div className="flex flex-col mt-6 px-4 sm:px-16 py-6">
+        <div className="flex flex-col mt-3 px-4 sm:px-16 py-3">
             <span className="text-center md:text-start font-mono text-xl mb-4">{title}</span>
             <Carousel className="w-full">
                 <CarouselContent className="-ml-6">

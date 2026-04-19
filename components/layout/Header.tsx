@@ -20,17 +20,13 @@ export default function Header() {
         setIsAuthenticated(false);
     }
 
-    if (isAuthenticated === undefined) {
-        return null;
-    }
-
     return (
         <div className="bg-[#0F0F14] flex flex-col sm:flex-row items-center sm:justify-between px-4 sm:px-16 py-5 gap-2 sm:gap-0">
             <Link href="/">
                 <header className="text-3xl text-center sm:text-left">MyGameList</header>
             </Link>
 
-            {isAuthenticated && (
+            {isAuthenticated === true && (
                 <div className="w-full sm:w-auto flex justify-center sm:justify-end gap-6">
                     <DropdownMenu>
                         <DropdownMenuTrigger className={"focus:outline-none focus:ring-0"} asChild>
@@ -63,11 +59,13 @@ export default function Header() {
                             </Link>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Image src={"/profile.png"} alt={"profile-photo"} width={44} height={44}/>
+                    <Link href={`/profile/${username}`}>
+                        <Image src={"/profile.png"} alt={"profile-photo"} width={44} height={44} className="hover:opacity-80 transition-opacity cursor-pointer"/>
+                    </Link>
                 </div>
             )}
 
-            {!isAuthenticated && (
+            {isAuthenticated === false && (
                 <Link href={"/login"}>
                     <Button className="bg-[#323237] text-white flex items-center h-7 w-19 cursor-pointer">
                         Sign in
