@@ -2,6 +2,7 @@ import Showcase from "@/components/game page/Showcase";
 import Image from "next/image";
 import {Game} from "@/lib";
 import ListManageOptions from "@/components/game page/ListManageOptions";
+import { Badge } from "@/components/ui/badge";
 
 export default function Card({game}: {game: Game}) {
     return (
@@ -50,6 +51,16 @@ export default function Card({game}: {game: Game}) {
                                             {game.price}$
                                         </span>
                                     </div>
+
+                                    {game.Game_Tags?.length > 0 && (
+                                        <div className="flex flex-wrap gap-1.5">
+                                            {game.Game_Tags.map(({ id, tag }) => (
+                                                <Badge key={id} className="font-mono bg-[#2F25B1]/40 text-white border border-[#2F25B1] hover:bg-[#2F25B1]/60">
+                                                    {tag}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

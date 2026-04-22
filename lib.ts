@@ -137,8 +137,71 @@ export async function getListItem(gameId: string): Promise<ListItem | null> {
     }
 }
 
+export type GamePayload = {
+    name: string;
+    description: string;
+    banner_url: string;
+    images: string[];
+    releaseDate: string;
+    price: number;
+    tags: string[];
+}
+
+export async function createGame(data: GamePayload): Promise<Game | null> {
+    try {
+        const response = await fetch(routes.games.all, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            return null
+        }
+
+        return response.json()
+    } catch {
+        return null
+    }
+}
+
+export async function updateGame(id: number, data: GamePayload): Promise<Game | null> {
+    try {
+        const response = await fetch(routes.games.one(id), {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            return null
+        }
+
+        return response.json()
+    } catch {
+        return null
+    }
+}
+
+export async function deleteGame(id: number): Promise<boolean> {
+    try {
+        const response = await fetch(routes.games.one(id), {
+            method: 'DELETE',
+        })
+
+        return response.ok
+    } catch {
+        return false
+    }
+}
+
 export type Images = {
     image_url: string;
+}
+
+export type GameTag = {
+    id: number;
+    tag: string;
 }
 
 export type Game = {
@@ -149,7 +212,7 @@ export type Game = {
     releaseDate: string;
     price: number;
     Game_Images: Images[];
-    tags: string[];
+    Game_Tags: GameTag[];
 }
 
 export type ListItem = {
