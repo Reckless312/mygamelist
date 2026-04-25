@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function ServerDownGuard() {
-    const { isServerDown } = useAuthentication()
+    const { isServerDown, isAuthenticated } = useAuthentication()
     const router = useRouter()
     const pathname = usePathname()
 
@@ -13,7 +13,11 @@ export default function ServerDownGuard() {
         if (isServerDown && pathname !== '/server-down') {
             router.push('/server-down')
         }
-    }, [isServerDown, pathname, router])
+
+        if (!isServerDown && isAuthenticated !== undefined && pathname === '/server-down') {
+            router.push('/')
+        }
+    }, [isServerDown, isAuthenticated, pathname, router])
 
     return null
 }

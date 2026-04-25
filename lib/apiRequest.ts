@@ -11,6 +11,8 @@ export const routes = {
         register: `${BASE}/api/register`,
         logout: `${BASE}/api/logout`,
         hq: `${BASE}/api/hq`,
+        loginSteam: `${BASE}/api/login/steam`,
+        steamProfile: `/api/steam/profile`,
     },
     list: {
         all: `${BASE}/api/list`,

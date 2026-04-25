@@ -25,7 +25,8 @@ function computeStats(list: ListItem[]) {
 }
 
 export default async function ProfilePage({ params }: Props) {
-    const { username } = await params
+    const { username: rawUsername } = await params
+    const username = decodeURIComponent(rawUsername)
     const list = await fetchPublicUserList(username)
 
     if (list === null) {

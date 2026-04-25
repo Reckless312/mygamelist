@@ -7,6 +7,7 @@ import {useRouter} from "next/navigation";
 import Link from "next/link";
 import {useAuthentication} from "@/components/AuthenticationContext";
 import {routes} from "@/lib/apiRequest";
+import Image from "next/image";
 
 export default function Credentials({buttonText, textRedirectPath, textRedirect, newAccount}: { buttonText: string, textRedirectPath: string, textRedirect:string, newAccount: boolean}) {
     const router = useRouter();
@@ -70,6 +71,19 @@ export default function Credentials({buttonText, textRedirectPath, textRedirect,
                 <Link href={textRedirectPath}>
                     <h1 className={"text-blue-400 hover:text-blue-500 font-mono text-center"}>{textRedirect}</h1>
                 </Link>
+
+                <div className="flex items-center gap-3 my-1">
+                    <div className="flex-1 h-px bg-gray-700"/>
+                    <span className="text-gray-500 text-xs font-mono">or</span>
+                    <div className="flex-1 h-px bg-gray-700"/>
+                </div>
+
+                <a href="/api/steam/login" className="w-full">
+                    <Button type="button" className="w-full bg-[#1b2838] hover:bg-[#2a475e] text-white h-12 text-base font-mono rounded cursor-pointer flex items-center justify-center gap-3">
+                        <Image src="/steam-logo-black-transparent.png" alt="Steam" width={20} height={20} className="invert"/>
+                        Sign in with Steam
+                    </Button>
+                </a>
             </div>
         </div>
     </Form>)
