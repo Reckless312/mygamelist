@@ -145,6 +145,7 @@ export type GamePayload = {
     releaseDate: string;
     price: number;
     tags: string[];
+    developer?: string;
 }
 
 export async function createGame(data: GamePayload): Promise<Game | null> {
@@ -201,7 +202,7 @@ export type Images = {
 
 export type GameTag = {
     id: number;
-    tag: string;
+    name: string;
 }
 
 export type Game = {
@@ -211,8 +212,9 @@ export type Game = {
     banner_url: string;
     releaseDate: string;
     price: number;
+    developer?: string | null;
     Game_Images: Images[];
-    Game_Tags: GameTag[];
+    Tags: GameTag[];
 }
 
 export type ListItem = {

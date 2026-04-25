@@ -6,8 +6,8 @@
 - Users can access the catalog from the navigation, either by the "Games" link or the search bar.
 <img width="1888" height="926" alt="image" src="https://github.com/user-attachments/assets/ffac46df-be18-4f2e-990d-fbb1eec7284c" /> <br/>
 - The catalog offers the users a full look at the catalog with applicable filters to find desired items.
-- Pagination is done using the infinite scroll technique, achieved by using reacts reference hook and assigning observers.
-- Authentification is simply done by a username and a password, implemented with http cookies, session and hashed password in the backend.
+- Pagination is done using page-based navigation with shadcn pagination components, displaying 3 games per page with ellipsis for large page counts.
+- Authentication supports both username/password and Steam (OpenID 2.0), implemented with http cookies, session and hashed password in the backend.
 <img width="1890" height="945" alt="image" src="https://github.com/user-attachments/assets/590c1739-c46b-43a1-861f-60a833a7ba75" /> <br/>
 - Each video game has its own page thanks to Next.js navigation and routing, combined with Reach components reusability for design.
 <img width="1891" height="937" alt="image" src="https://github.com/user-attachments/assets/79cfdf47-e627-4575-a361-af991a2d8dc2" /> <br/>

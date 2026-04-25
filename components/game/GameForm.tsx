@@ -26,13 +26,14 @@ export default function GameForm(props: GameFormProps) {
     const initial = props.mode === 'edit' ? props.game : null
 
     const [name, setName] = useState(initial?.name ?? '')
+    const [developer, setDeveloper] = useState(initial?.developer ?? '')
     const [description, setDescription] = useState(initial?.description ?? '')
     const [bannerUrl, setBannerUrl] = useState(initial?.banner_url ?? '')
     const [releaseDate, setReleaseDate] = useState<Date | undefined>(
         initial?.releaseDate ? new Date(initial.releaseDate) : undefined
     )
     const [price, setPrice] = useState<number>(initial?.price ?? 0)
-    const [tags, setTags] = useState<string[]>(Array.isArray(initial?.Game_Tags) ? initial.Game_Tags.map(t => t.tag) : [])
+    const [tags, setTags] = useState<string[]>(Array.isArray(initial?.Tags) ? initial.Tags.map(t => t.name) : [])
     const [tagInput, setTagInput] = useState('')
     const [images, setImages] = useState<string[]>(initial?.Game_Images?.map(i => i.image_url) ?? [])
     const [imageInput, setImageInput] = useState('')
@@ -44,6 +45,9 @@ export default function GameForm(props: GameFormProps) {
 
         if (name.trim().length < 3) {
             newErrors.name = 'Name must be at least 3 characters'
+        }
+        if (developer.trim().length > 0 && developer.trim().length < 2) {
+            newErrors.developer = 'Developer must be at least 2 characters'
         }
         if (description.trim().length < 10) {
             newErrors.description = 'Description must be at least 10 characters'
@@ -102,6 +106,7 @@ export default function GameForm(props: GameFormProps) {
             price,
             tags,
             images,
+            ...(developer.trim() && { developer: developer.trim() }),
         }
 
         let result: Game | null
@@ -142,6 +147,18 @@ export default function GameForm(props: GameFormProps) {
                             placeholder="e.g. Half-Life 3"
                         />
                         {errors.name && <p className="text-red-400 text-xs font-mono">{errors.name}</p>}
+                    </div>
+
+                    <div className="flex flex-col gap-1.5">
+                        <Label htmlFor="developer" className="font-mono text-gray-300">Developer <span className="text-gray-500">(optional)</span></Label>
+                        <Input
+                            id="developer"
+                            value={developer}
+                            onChange={e => setDeveloper(e.target.value)}
+                            className={INPUT_CLASS}
+                            placeholder="e.g. Valve"
+                        />
+                        {errors.developer && <p className="text-red-400 text-xs font-mono">{errors.developer}</p>}
                     </div>
 
                     <div className="flex flex-col gap-1.5">

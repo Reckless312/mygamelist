@@ -3,7 +3,7 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import SortAndStatistics from "@/components/search page/SortAndStatistics"
 import Pagination from "@/components/search page/Pagination"
 import Link from "next/link"
@@ -15,21 +15,13 @@ import { Pencil } from "lucide-react"
 
 export default function Results({ query, games }: { query: string, games: Game[] }) {
     const [localGames, setLocalGames] = useState<Game[]>(games)
-    const { isAuthenticated } = useAuthentication()
+    const { role } = useAuthentication()
 
     const foundGames = useMemo(() => {
         return localGames?.filter((game) => game.name.toLowerCase().includes(query.toLowerCase())) || []
     }, [localGames, query])
 
     const [sortOption, setSortOption] = useState<"name-asc" | "name-desc" | "newest" | "oldest">("name-asc")
-
-    useEffect(() => {
-        const form = document.querySelector(".search-form") as HTMLFormElement | null
-
-        if (form) {
-            form.reset()
-        }
-    }, [query])
 
     const sortedGames = useMemo(() => {
         const copyOfFoundGames = [...foundGames]
@@ -66,7 +58,7 @@ export default function Results({ query, games }: { query: string, games: Game[]
                                 <p className="text-sm text-muted-foreground">Release: {game.releaseDate}</p>
                             </div>
                         </Link>
-                        {isAuthenticated && (
+                        {role === 'admin' && (
                             <div className="flex gap-2 items-center shrink-0 ml-auto">
                                 <Link href={`/game/${game.id}/edit`}>
                                     <Button variant="outline" size="icon" className="h-8 w-8 cursor-pointer border-gray-600 bg-transparent hover:bg-gray-700 text-white hover:text-white">

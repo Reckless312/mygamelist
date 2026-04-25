@@ -3,6 +3,7 @@
 import React, {useEffect, useState} from "react";
 import {fetchUserList, ListItem, statusFilters} from "@/lib";
 import {useAuthentication} from "@/components/AuthenticationContext";
+import Link from "next/link";
 
 export default function List() {
     const [activeFilter, setActiveFilter] = useState("all");
@@ -42,18 +43,18 @@ export default function List() {
                             {index + 1}
                         </td>
                         <td className="p-4">
-                            <div className="font-mono text-gray-100 group-hover:text-white transition-colors">
+                            <Link href={`/game/${item.game.id}`} className="font-mono text-gray-100 group-hover:text-white transition-colors">
                                 {item.game.name}
-                            </div>
+                            </Link>
                         </td>
                         <td className="p-4 text-center">
                             <span className={`font-mono text-lg text-white`}>
                                 {item.score === 0 ? '-' : `${item.score}` }
                             </span>
                         </td>
-                        {/*<td className="p-4 text-sm text-gray-300 group-hover:text-gray-200 transition-colors">*/}
-                        {/*    {game.developer}*/}
-                        {/*</td>*/}
+                        <td className="p-4 text-sm font-mono text-gray-300 group-hover:text-gray-200 transition-colors">
+                            {item.game.developer ?? '—'}
+                        </td>
                     </tr>
                 ))}
                 </tbody>

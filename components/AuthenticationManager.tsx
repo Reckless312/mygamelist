@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { routes } from "@/lib/apiRequest";
 
 export default function AuthenticationManager() {
-    const { setUsername, setIsAuthenticated, setIsServerDown } = useAuthentication() || {};
+    const { setUsername, setIsAuthenticated, setIsServerDown, setAvatarUrl, setRole } = useAuthentication() || {};
 
     useEffect(() => {
         const init = async () => {
@@ -16,6 +16,8 @@ export default function AuthenticationManager() {
                     const data = await hqResponse.json();
                     if (data.username !== undefined && data.username !== "") {
                         setUsername(data.username);
+                        setAvatarUrl(data.avatarUrl ?? null);
+                        setRole(data.role ?? 'user');
                         setIsAuthenticated(true);
                         return;
                     }
@@ -28,11 +30,11 @@ export default function AuthenticationManager() {
                     return;
                 }
 
-                const { steamId, displayName } = await profileResponse.json();
+                const { steamId, displayName, avatarUrl } = await profileResponse.json();
                 const loginResponse = await fetch(routes.auth.loginSteam, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ steamId, displayName }),
+                    body: JSON.stringify({ steamId, displayName, avatarUrl }),
                     credentials: "include",
                 });
 
@@ -46,6 +48,8 @@ export default function AuthenticationManager() {
                 if (hqRetry.status === 200) {
                     const data = await hqRetry.json();
                     setUsername(data.username);
+                    setAvatarUrl(data.avatarUrl ?? null);
+                    setRole(data.role ?? 'user');
                     setIsAuthenticated(true);
                     return;
                 }
@@ -59,7 +63,7 @@ export default function AuthenticationManager() {
         };
 
         init();
-    }, [setUsername, setIsAuthenticated, setIsServerDown]);
+    }, [setUsername, setIsAuthenticated, setIsServerDown, setAvatarUrl, setRole]);
 
     return null;
 }

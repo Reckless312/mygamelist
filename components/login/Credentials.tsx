@@ -67,23 +67,22 @@ export default function Credentials({buttonText, textRedirectPath, textRedirect,
                     {buttonText}
                 </Button>
 
+                {!newAccount && (
+                    <a href="/api/steam/login" className="w-full">
+                        <Button type="button" className="w-full bg-[#1b2838] hover:bg-[#2a475e] text-white h-12 text-base font-mono rounded cursor-pointer flex items-center justify-center gap-3">
+                            <Image src="/steam-logo-black-transparent.png" alt="Steam" width={20} height={20} className="invert"/>
+                            Sign in with Steam
+                        </Button>
+                    </a>
+                )}
 
-                <Link href={textRedirectPath}>
-                    <h1 className={"text-blue-400 hover:text-blue-500 font-mono text-center"}>{textRedirect}</h1>
-                </Link>
+                <div className="h-px bg-gray-700 my-4"/>
 
-                <div className="flex items-center gap-3 my-1">
-                    <div className="flex-1 h-px bg-gray-700"/>
-                    <span className="text-gray-500 text-xs font-mono">or</span>
-                    <div className="flex-1 h-px bg-gray-700"/>
-                </div>
-
-                <a href="/api/steam/login" className="w-full">
-                    <Button type="button" className="w-full bg-[#1b2838] hover:bg-[#2a475e] text-white h-12 text-base font-mono rounded cursor-pointer flex items-center justify-center gap-3">
-                        <Image src="/steam-logo-black-transparent.png" alt="Steam" width={20} height={20} className="invert"/>
-                        Sign in with Steam
+                <Link href={textRedirectPath} className="w-full">
+                    <Button type="button" className="w-full bg-transparent border border-blue-500 hover:bg-blue-500/10 text-blue-400 h-12 text-base font-mono rounded cursor-pointer">
+                        {textRedirect}
                     </Button>
-                </a>
+                </Link>
             </div>
         </div>
     </Form>)

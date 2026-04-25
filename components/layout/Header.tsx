@@ -5,11 +5,11 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import {useAuthentication} from "@/components/AuthenticationContext";
-import {ChevronDown} from "lucide-react";
+import {ChevronDown, ShieldCheck} from "lucide-react";
 import {routes} from "@/lib/apiRequest";
 
 export default function Header() {
-    const {username, isAuthenticated, setIsAuthenticated} = useAuthentication() || {};
+    const {username, isAuthenticated, avatarUrl, role, setIsAuthenticated} = useAuthentication() || {};
 
     const onLogout = async () => {
         await fetch(routes.auth.logout, {
@@ -47,6 +47,9 @@ export default function Header() {
                             <button className="hover:opacity-80 transition-opacity cursor-pointer">
                                 <div className={"flex flex-row items-center gap-2 text-white font-mono"}>
                                     <span>{username}</span>
+                                    {role === 'admin' && (
+                                        <ShieldCheck className="w-4 h-4 text-[#2F25B1]" />
+                                    )}
                                     <ChevronDown className="w-4 h-4" />
                                 </div>
                             </button>
@@ -60,7 +63,7 @@ export default function Header() {
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <Link href={`/profile/${username}`}>
-                        <Image src={"/profile.png"} alt={"profile-photo"} width={44} height={44} className="hover:opacity-80 transition-opacity cursor-pointer"/>
+                        <Image src={avatarUrl ?? "/profile.png"} alt={"profile-photo"} width={44} height={44} className="hover:opacity-80 transition-opacity cursor-pointer"/>
                     </Link>
                 </div>
             )}

@@ -38,6 +38,7 @@ export async function GET(request: NextRequest) {
     }
 
     let displayName = steamId;
+    let avatarUrl: string | null = null;
     const steamApiKey = process.env.STEAM_API_KEY;
     if (steamApiKey) {
         const profileRes = await fetch(
@@ -49,11 +50,14 @@ export async function GET(request: NextRequest) {
             if (player?.personaname) {
                 displayName = player.personaname;
             }
+            if (player?.avatarfull) {
+                avatarUrl = player.avatarfull;
+            }
         }
     }
 
     const response = NextResponse.redirect(new URL("/", request.url));
-    response.cookies.set("steam_pending", JSON.stringify({ steamId, displayName }), {
+    response.cookies.set("steam_pending", JSON.stringify({ steamId, displayName, avatarUrl }), {
         httpOnly: true,
         maxAge: 60,
         path: "/",

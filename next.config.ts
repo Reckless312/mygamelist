@@ -21,6 +21,12 @@ const nextConfig: NextConfig = {
                 port: '',
                 pathname: '/store_item_assets/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'avatars.steamstatic.com',
+                port: '',
+                pathname: '/**',
+            },
         ],
     },
 };

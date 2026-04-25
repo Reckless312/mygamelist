@@ -1,8 +1,8 @@
-import Image from "next/image"
 import { notFound } from "next/navigation"
 import { fetchPublicUserList, statusFilters } from "@/lib"
 import type { ListItem } from "@/lib"
 import Layout from "@/components/layout/Layout"
+import Avatar from "@/components/profile/Avatar"
 
 type Props = {
     params: Promise<{ username: string }>
@@ -41,12 +41,7 @@ export default async function ProfilePage({ params }: Props) {
             <div className="flex items-center px-16 py-12 gap-16 text-white font-mono">
                 <div className="flex flex-col items-start gap-3 shrink-0">
                     <h1 className="text-2xl font-bold">{username}</h1>
-                    <Image
-                        src="/profile.png"
-                        alt="profile"
-                        width={288}
-                        height={288}
-                    />
+                    <Avatar username={username} />
                     <p className="text-gray-400 text-sm">{totalGames} game{totalGames !== 1 ? "s" : ""} in list</p>
                 </div>
 

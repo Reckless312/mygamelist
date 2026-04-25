@@ -38,25 +38,34 @@ export default function Card({game}: {game: Game}) {
                                 <div className="flex-1"></div>
 
                                 <div className="border-t border-gray-700 pt-3 space-y-3">
-                                    <div className="flex justify-between items-center">
+                                    {game.developer && (
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-gray-400 text-sm font-mono">Developer:</span>
+                                            <span className="text-white text-sm font-mono bg-gray-700/50 px-2 py-1 rounded">
+                                                {game.developer}
+                                            </span>
+                                        </div>
+                                    )}
+                                    <div className="flex items-center gap-2">
                                         <span className="text-gray-400 text-sm font-mono">Release Date:</span>
                                         <span className="text-white text-sm font-mono bg-gray-700/50 px-2 py-1 rounded">
                                             {game.releaseDate}
                                         </span>
                                     </div>
 
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex items-center gap-2">
                                         <span className="text-gray-400 text-sm font-mono">Price:</span>
                                         <span className="text-white text-sm font-mono bg-gray-700/50 px-2 py-1 rounded">
                                             {game.price}$
                                         </span>
                                     </div>
 
-                                    {game.Game_Tags?.length > 0 && (
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {game.Game_Tags.map(({ id, tag }) => (
+                                    {game.Tags?.length > 0 && (
+                                        <div className="flex flex-wrap items-center gap-1.5">
+                                            <span className="text-gray-400 text-sm font-mono">Tags:</span>
+                                            {game.Tags.map(({ id, name }) => (
                                                 <Badge key={id} className="font-mono bg-[#2F25B1]/40 text-white border border-[#2F25B1] hover:bg-[#2F25B1]/60">
-                                                    {tag}
+                                                    {name}
                                                 </Badge>
                                             ))}
                                         </div>
