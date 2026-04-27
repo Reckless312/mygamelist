@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation"
-import { fetchPublicUserList, statusFilters } from "@/lib"
+import { fetchPublicUserList, fetchPublicUserFavorites, statusFilters } from "@/lib"
 import type { ListItem } from "@/lib"
 import Layout from "@/components/layout/Layout"
 import Avatar from "@/components/profile/Avatar"
+import FavoritesSection from "@/components/profile/FavoritesSection"
 
 type Props = {
     params: Promise<{ username: string }>
@@ -27,7 +28,10 @@ function computeStats(list: ListItem[]) {
 export default async function ProfilePage({ params }: Props) {
     const { username: rawUsername } = await params
     const username = decodeURIComponent(rawUsername)
-    const list = await fetchPublicUserList(username)
+    const [list, favorites] = await Promise.all([
+        fetchPublicUserList(username),
+        fetchPublicUserFavorites(username),
+    ])
 
     if (list === null) {
         notFound()
@@ -38,9 +42,10 @@ export default async function ProfilePage({ params }: Props) {
 
     return (
         <Layout>
-            <div className="flex items-center px-16 py-12 gap-16 text-white font-mono">
+            <div className="px-16 py-12 text-white font-mono">
+                <h1 className="text-2xl font-bold mb-4">{username}</h1>
+                <div className="flex items-start gap-16">
                 <div className="flex flex-col items-start gap-3 shrink-0">
-                    <h1 className="text-2xl font-bold">{username}</h1>
                     <Avatar username={username} />
                     <p className="text-gray-400 text-sm">{totalGames} game{totalGames !== 1 ? "s" : ""} in list</p>
                 </div>
@@ -66,6 +71,9 @@ export default async function ProfilePage({ params }: Props) {
                             ))}
                         </tbody>
                     </table>
+                </div>
+
+                <FavoritesSection favorites={favorites} />
                 </div>
             </div>
         </Layout>

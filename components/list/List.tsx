@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {fetchUserList, ListItem, statusFilters} from "@/lib";
 import {useAuthentication} from "@/components/AuthenticationContext";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function List() {
     const [activeFilter, setActiveFilter] = useState("all");
@@ -31,6 +32,7 @@ export default function List() {
                 <thead>
                 <tr className="border-b border-gray-700/50">
                     <th className="text-left p-4 text-sm font-mono text-[#4A5D8A] w-16">#</th>
+                    <th className="w-16"></th>
                     <th className="text-left p-4 text-sm font-mono text-[#4A5D8A]">Game Title</th>
                     <th className="text-left p-4 text-sm font-mono text-[#4A5D8A] w-20">Score</th>
                     <th className="text-left p-4 text-sm font-mono text-[#4A5D8A]">Developer</th>
@@ -41,6 +43,11 @@ export default function List() {
                     <tr key={item.game.id} className="border-b border-gray-800/30 hover:bg-[#2F3A67]/10 transition-colors duration-200 group">
                         <td className="p-4 text-sm font-mono text-white group-hover:text-[#4A5D8A] transition-colors">
                             {index + 1}
+                        </td>
+                        <td className="py-2 pl-4 pr-0">
+                            {item.game.banner_url && (
+                                <Image src={item.game.banner_url} alt="" width={60} height={28} className="rounded object-cover h-7 w-15" />
+                            )}
                         </td>
                         <td className="p-4">
                             <Link href={`/game/${item.game.id}`} className="font-mono text-gray-100 group-hover:text-white transition-colors">

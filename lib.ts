@@ -184,6 +184,62 @@ export async function updateGame(id: number, data: GamePayload): Promise<Game | 
     }
 }
 
+export async function fetchPublicUserFavorites(username: string): Promise<Game[]> {
+    try {
+        const response = await fetch(routes.users.favorites(username))
+
+        if (!response.ok) {
+            return []
+        }
+
+        return response.json()
+    } catch {
+        return []
+    }
+}
+
+export async function getFavoriteStatus(gameId: string): Promise<boolean> {
+    try {
+        const response = await fetch(routes.favorites.one(gameId), { credentials: 'include' })
+
+        if (!response.ok) {
+            return false
+        }
+
+        const data = await response.json()
+
+        return data.isFavorited ?? false
+    } catch {
+        return false
+    }
+}
+
+export async function addFavorite(gameId: string): Promise<boolean> {
+    try {
+        const response = await fetch(routes.favorites.one(gameId), {
+            method: 'POST',
+            credentials: 'include',
+        })
+
+        return response.ok
+    } catch {
+        return false
+    }
+}
+
+export async function removeFavorite(gameId: string): Promise<boolean> {
+    try {
+        const response = await fetch(routes.favorites.one(gameId), {
+            method: 'DELETE',
+            credentials: 'include',
+        })
+
+        return response.ok
+    } catch {
+        return false
+    }
+}
+
 export async function deleteGame(id: number): Promise<boolean> {
     try {
         const response = await fetch(routes.games.one(id), {

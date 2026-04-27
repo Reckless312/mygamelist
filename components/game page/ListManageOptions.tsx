@@ -4,8 +4,8 @@ import {Button} from "@/components/ui/button";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {useCallback, useEffect, useState} from "react";
 import {useAuthentication} from "@/components/AuthenticationContext";
-import {Game, getListItem, ListItem, addItemToList, removeItemFromList, updateListItem} from "@/lib";
-import {ChevronDown, Plus, Star, Trash2} from "lucide-react";
+import {Game, getListItem, ListItem, addItemToList, removeItemFromList, updateListItem, getFavoriteStatus, addFavorite, removeFavorite} from "@/lib";
+import {ChevronDown, Heart, Plus, Star, Trash2} from "lucide-react";
 import {toast} from "@/lib/toast";
 
 const STATUS_OPTIONS = ['Currently Playing', 'Completed', 'On Hold', 'Dropped', 'Plan to Play'];
@@ -14,6 +14,7 @@ const SCORE_OPTIONS = Array.from({length: 11}, (_, i) => i);
 
 export default function ListManageOptions({game}: {game: Game}) {
     const [listItem, setListItem] = useState<ListItem | null | undefined>(undefined);
+    const [favorited, setFavorited] = useState(false);
     const {username} = useAuthentication() || {};
 
     const refreshListData = useCallback(async () => {
@@ -21,9 +22,13 @@ export default function ListManageOptions({game}: {game: Game}) {
             return;
         }
 
-        const itemResult = await getListItem(game.id.toString());
+        const [itemResult, isFav] = await Promise.all([
+            getListItem(game.id.toString()),
+            getFavoriteStatus(game.id.toString()),
+        ]);
 
         setListItem(itemResult);
+        setFavorited(isFav);
     }, [username, game.id]);
 
     const handleAddToList = async () => {
@@ -78,15 +83,43 @@ export default function ListManageOptions({game}: {game: Game}) {
         await refreshListData();
     };
 
+    const handleFavoriteToggle = async () => {
+        if (favorited) {
+            const ok = await removeFavorite(game.id.toString());
+
+            if (ok) {
+                setFavorited(false);
+                toast.success("Removed from favorites");
+            } else {
+                toast.error("Failed to remove from favorites");
+            }
+        } else {
+            const ok = await addFavorite(game.id.toString());
+
+            if (ok) {
+                setFavorited(true);
+                toast.success("Added to favorites");
+            } else {
+                toast.error("Failed to add to favorites");
+            }
+        }
+    };
+
     if (listItem === undefined) {
         return null;
     }
 
     if (listItem === null) {
         return (
-            <div className="mt-4">
-                <Button onClick={handleAddToList} className="bg-blue-600 hover:bg-blue-700 text-white font-mono text-sm h-9 px-4">
+            <div className="mt-4 flex gap-2">
+                <Button onClick={handleAddToList} className="bg-blue-600 hover:bg-blue-700 text-white font-mono text-sm h-9 px-4 cursor-pointer">
                     <Plus className="w-4 h-4 mr-2"/> Add To List
+                </Button>
+                <Button onClick={handleFavoriteToggle} className={`font-mono text-sm h-9 px-4 cursor-pointer border ${favorited
+                    ? 'bg-pink-600/40 hover:bg-pink-600/60 text-pink-200 border-pink-500/50'
+                    : 'bg-gray-700/50 hover:bg-gray-600/50 text-white border-gray-600'}`}>
+                    <Heart className={`w-4 h-4 mr-2 ${favorited ? 'fill-pink-300 text-pink-300' : ''}`}/>
+                    {favorited ? 'Unfavorite' : 'Favorite'}
                 </Button>
             </div>
         );
@@ -141,10 +174,16 @@ export default function ListManageOptions({game}: {game: Game}) {
                     </DropdownMenu>
                 </div>
 
-                <div className="pt-2 border-t border-gray-700">
+                <div className="pt-2 border-t border-gray-700 space-y-2">
                     <Button onClick={handleRemoveFromList} variant="destructive" className="bg-red-600/80 hover:bg-red-600
                      text-white font-mono text-sm h-9 px-4 w-full cursor-pointer">
                         <Trash2 className="w-4 h-4 mr-2" /> Remove from List
+                    </Button>
+                    <Button onClick={handleFavoriteToggle} className={`font-mono text-sm h-9 px-4 w-full cursor-pointer border ${favorited
+                        ? 'bg-pink-600/40 hover:bg-pink-600/60 text-pink-200 border-pink-500/50'
+                        : 'bg-gray-700/50 hover:bg-gray-600/50 text-white border-gray-600'}`}>
+                        <Heart className={`w-4 h-4 mr-2 ${favorited ? 'fill-pink-300 text-pink-300' : ''}`}/>
+                        {favorited ? 'Remove from Favorites' : 'Add to Favorites'}
                     </Button>
                 </div>
             </div>

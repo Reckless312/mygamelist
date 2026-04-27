@@ -18,7 +18,12 @@ export const routes = {
         all: `${BASE}/api/list`,
         one: (gameId: string | number) => `${BASE}/api/list/${gameId}`,
     },
+    favorites: {
+        all: `${BASE}/api/favorites`,
+        one: (gameId: string | number) => `${BASE}/api/favorites/${gameId}`,
+    },
     users: {
         list: (username: string) => `${BASE}/api/users/${username}/list`,
+        favorites: (username: string) => `${BASE}/api/users/${username}/favorites`,
     },
 }

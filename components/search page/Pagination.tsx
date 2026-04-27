@@ -13,7 +13,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 
-const ITEMS_PER_PAGE = 3
+const ITEMS_PER_PAGE = 5
 
 function buildHref(query: string, page: number) {
     return `/search?query=${encodeURIComponent(query)}&page=${page}`
