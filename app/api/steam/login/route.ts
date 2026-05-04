@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const STEAM_OPENID_URL = "https://steamcommunity.com/openid/login";
 
 export async function GET(request: NextRequest) {
-    const appUrl = request.nextUrl.origin;
+    const appUrl = process.env.APP_URL ?? request.nextUrl.origin;
 
     const params = new URLSearchParams({
         "openid.ns": "http://specs.openid.net/auth/2.0",

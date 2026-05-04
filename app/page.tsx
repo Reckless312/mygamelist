@@ -2,6 +2,8 @@ import Layout from "@/components/layout/Layout";
 import {fetchGamesFromYear} from "@/lib";
 import {Showcase} from "@/components/main page/Showcase";
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
     const previousYearReleases = await fetchGamesFromYear("2024");
     const thisYearReleases = await fetchGamesFromYear("2025");

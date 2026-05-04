@@ -1,4 +1,6 @@
-const BASE = process.env.NEXT_PUBLIC_BACKEND_API || 'http://localhost:8080'
+const BASE = typeof window === 'undefined'
+    ? (process.env.BACKEND_API || 'http://localhost:8080')
+    : `${window.location.protocol}//${window.location.hostname}:${window.location.protocol === 'https:' ? '8443' : '8080'}`
 
 export const routes = {
     games: {

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "@/components/layout/SearchBar";
 import Header from "@/components/layout/Header";
+import ServerInfo from "@/components/layout/ServerInfo";
 import React, {ReactNode} from "react";
 
 interface LayoutProps {
@@ -37,7 +38,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         </svg>
                     </div>
 
-                    <div className="bg-[#2F25B1] px-16 py-4 text-center flex items-center justify-end">
+                    <div className="bg-[#2F25B1] px-16 py-4 text-center flex items-center justify-between">
+                        <ServerInfo />
                         <Link href="https://steamcommunity.com/id/faina2k26/">
                             <Image src="/steam-logo-black-transparent.png" alt="Steam Logo" width={60} height={20}/>
                         </Link>
